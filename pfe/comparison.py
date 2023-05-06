@@ -15,16 +15,7 @@ import packaging.version
 from pfe import PFE
 
 
-def Comparison(object,
-               mtype,
-               ctype,
-               csubtype,
-               mvalue,
-               ccomplex=None,
-               ccomplex_value=False,
-               exemptfail=False,
-               comparison_name="unnamed",
-               **kwargs):
+class Comparison():
 
     def __init__(self,
                  object,
@@ -32,7 +23,8 @@ def Comparison(object,
                  mvalue=None,
                  ccomplex=None,
                  exemptfail=False,
-                 comparison_name="unnamed", **kwargs):
+                 comparison_name="unnamed",
+                 **kwargs):
 
         '''
 
@@ -75,12 +67,11 @@ def Comparison(object,
 
         if isinstance(mtype, str):
             # Expand mtype to length of comparisons
-            self.mtype = [mtype for x in range(self.length) ]
+            self.mtype = [mtype for x in range(self.length)]
         elif isinstance(mtype, list):
             if len(mtype) != self.length:
                 raise ValueError("Custom list of mtypes doesn't match length fo values and complexes")
             self.mtype = mtype
-
 
         self.id_field = self.kwargs.get("id_field", None)
         self.data_field = self.kwargs.get("data_field", None)
@@ -132,7 +123,6 @@ def Comparison(object,
 
                 this_mvalue = self.mvalue[ti]
 
-
                 try:
                     this_cvalue = pyjq.one(self.ccomplex[ti], x)
 
@@ -151,7 +141,7 @@ def Comparison(object,
                         this_pfe = self.is_check(this_mvalue, this_cvalue)
                     elif this_mtype in ("match", "matchne"):
                         match_args = {"ne": False}
-                        if "ne" in mvalue:
+                        if "ne" in this_mtype:
                             match_args["ne"] = True
 
                         this_pfe = self.match_check(this_mvalue, this_cvalue, **match_args)
@@ -185,7 +175,6 @@ def Comparison(object,
                         break
                     else:
                         results.append(this_pfe)
-
 
             if PFE.EXEMPT in results:
                 exempt_list.append(object_name)
@@ -306,7 +295,6 @@ def Comparison(object,
                 mvalue_ver = len(mvalue)
                 cvalue_ver = len(cvalue)
 
-
             if direction == "eq":
                 if cvalue_ver == mvalue_ver:
                     pfe = PFE.PASS
@@ -335,6 +323,5 @@ def Comparison(object,
             else:
                 self.logger.warning("Unknown version direction {}".format(direction))
                 pfe = PFE.EXEMPT
-
 
         return pfe
