@@ -1,0 +1,2 @@
+packaging>=23.1
+pyjq>=2.6.0
