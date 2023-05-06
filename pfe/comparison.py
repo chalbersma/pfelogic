@@ -92,6 +92,11 @@ def Comparison(object,
         else:
             self.object = [object]
 
+        if self.kwargs.get("run", True) is True:
+            self.results = self.big_loop()
+        else:
+            self.results = None
+
     def big_loop(self):
 
         pass_list = list()
