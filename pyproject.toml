@@ -7,13 +7,13 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "pfelogic"
-version = "2023.05.05.0"
+version = "2023.05.06.0"
 authors = [
     {name = "Chris Halbersma", email = "chalbersma@halbersma.us"},
 ]
 description = "An opinionated pass fail exempt library that I wanted to stop making in every project."
 readme = "README.md"
-requires-python = ">=3.10"
+requires-python = ">=3.9"
 keywords = ["manowar"]
 license = {text = "BSD-2-Clause"}
 classifiers = [
